@@ -80,6 +80,7 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
         "binPath": ["bin"]
       }
     ],
+    "ccache": false,
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
@@ -123,6 +124,7 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
         "binPath": ["bin"]
       }
     ],
+    "ccache": true,
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
@@ -157,7 +159,7 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
       "device": "thyme",
       "defconfig": "thyme_defconfig"
     },
-    "withKernelSU": true,
+    "withKernelSU": false,
     "toolchains": [
       {
         "repo": "https://github.com/kdrag0n/proton-clang",
@@ -166,6 +168,7 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
         "binPath": ["bin"]
       }
     ],
+    "ccache": true,
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
@@ -218,6 +221,7 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
       "binPath": []
     }
   ],
+  "ccache": false,
   "params": {
     "ARCH": "",
     "CC": "",
@@ -241,8 +245,9 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
 | 字段名称     | 描述                                                                                           |
 | ------------ | ---------------------------------------------------------------------------------------------- |
 | kernelSource | 内核源代码的相关信息，包括名称、仓库地址、分支和设备类型。                                     |
-| withKernelSU | 一个布尔值，表示是否使用了名为 `KernelSU` 的内核补丁工具。                                     |
+| withKernelSU | 一个布尔值，表示是否使用了名为 `KernelSU` 的内核补丁。                                         |
 | toolchains   | 一个数组，包含了需要用到的工具链的相关信息，包括仓库地址、分支和名称。                         |
+| ccache       | 一个布尔值，表示是否使用了名为 `ccache` 的编译工具来加速编译。                                 |
 | params       | 一个对象，包含了构建参数的相关信息，其中包括了架构类型、交叉编译器、编译器等信息。             |
 | AnyKernel3   | 一个对象，包含了构建内核刷机包的相关信息，其中包括了使用的 `AnyKernel3` 仓库地址、分支等信息。 |
 
@@ -361,8 +366,8 @@ act --artifact-server-path /tmp/artifacts -v
 # TODO 列表
 
 - 为第三方编译器添加相对路径支持（现在使用绝对路径）。
-- 使用 `ccache` 加快编译速度。
 - 通过 `wget` 添加 `.tar.gz` 文件作为第三方编译器（现在使用 `git` 获取工具链）。
+- 使用 `MagiskBoot` 来生成 `boot.img`
 
 # 致谢
 

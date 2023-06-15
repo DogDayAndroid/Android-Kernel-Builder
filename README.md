@@ -81,6 +81,7 @@ The `Set-repos` job reads the kernel sources from the configuration file and out
         "binPath": ["bin"]
       }
     ],
+    "ccache":false,
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
@@ -124,6 +125,7 @@ The `Set-repos` job reads the kernel sources from the configuration file and out
         "binPath": ["bin"]
       }
     ],
+    "ccache":true,
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
@@ -158,7 +160,7 @@ The `Set-repos` job reads the kernel sources from the configuration file and out
       "device": "thyme",
       "defconfig": "thyme_defconfig"
     },
-    "withKernelSU": true,
+    "withKernelSU": false,
     "toolchains": [
       {
         "repo": "https://github.com/kdrag0n/proton-clang",
@@ -167,6 +169,7 @@ The `Set-repos` job reads the kernel sources from the configuration file and out
         "binPath": ["bin"]
       }
     ],
+    "ccache":true,
     "params": {
       "ARCH": "arm64",
       "CC": "proton-clang/bin/clang",
@@ -219,6 +222,7 @@ The `Set-repos` job reads the kernel sources from the configuration file and out
       "binPath": []
     }
   ],
+  "ccache":false,
   "params": {
     "ARCH": "",
     "CC": "",
@@ -242,8 +246,9 @@ In general, there are the following fields:
 | Field Name   | Description                                                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | kernelSource | Information about the kernel source code, including name, repository address, branch, and device type.                                |
-| withKernelSU | A boolean value indicating whether the `KernelSU` kernel patch tool was used.                                                         |
+| withKernelSU | A boolean value indicating whether the `KernelSU` was used.                                                         |
 | toolchains   | An array containing information about the toolchains needed, including repository address, branch, and name.                          |
+| ccache | A boolean value indicating whether the `ccache` tool was used to speed up compile.                                                         |
 | params       | An object containing information about the build parameters, including architecture type, cross-compiler, compiler, etc.              |
 | AnyKernel3   | An object containing information about building the kernel flash package, including the `AnyKernel3` repository address, branch, etc. |
 
@@ -363,7 +368,7 @@ This is just a suggestion, and we do not provide a specific guide.
 
 - Add `.tar.gz` files via `wget` for third-party compilers (use `git` for toolchain now).
 - Added relative path support for third-party compilers (absolute paths are now used).
-- Use `ccache` to speed up compilation.
+- Use `MagiskBoot` to generate `boot.img`
 
 # Acknowledgments
 
