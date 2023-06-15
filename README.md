@@ -270,8 +270,61 @@ This is an array that contains many repository objects of cross-compilation tool
 | ------------------- | ------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `repo`              | String | Toolchain Repository Address | The `git` repository address of the toolchain.                                                                                                                                        |
 | `branch`            | String | Toolchain Branch             | The specified branch of the repository.                                                                                                                                               |
+| `url`          | String | Toolchain Download Url   | The download url of the toolchain.                                                                                                 |
 | `name`              | String | Toolchain Name               | The name of the folder cloned locally, customized.                                                                                                                                    |
 | `binPath`           | Array  | Toolchain Binary File Path   | The path of the `bin` file used during compilation (relative to the path of the cloned folder). It will be converted to an **absolute path** during parameter setting when compiling. |
+
+Therefore, you can use the following forms to obtain the compilation toolchain:
+
+#### 1. Use `Git` to pull the toolchain
+
+```json
+"toolchains": [
+  {
+    "repo": "https://github.com/kdrag0n/proton-clang",
+    "branch": "master",
+    "name": "proton-clang",
+    "binPath": ["./bin"]
+  }
+]
+```
+
+#### 2. Use `wget` to download the toolchain
+
+In this way, you can get the compiled toolchain compressed package in `.zip` | `.tar` | `.tar.gz` | `.rar` format.
+
+```json
+"toolchains": [
+  {
+    "url": "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master-kernel-build-2022/clang-r450784d.tar.gz",
+    "name": "clang",
+    "binPath": ["./bin"]
+  },
+  {
+    "url": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.1.0_r27.tar.gz",
+    "name": "gcc",
+    "binPath": ["bin"]
+  }
+]
+```
+
+#### 3. Mixed mode (using `Git` and `wget` at the same time)
+
+```json
+"toolchains": [,
+  {
+    "repo": "https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone/",
+    "branch": "11",
+    "name": "clang",
+    "binPath": ["bin"]
+  },
+  {
+    "url": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.1.0_r27.tar.gz",
+    "name": "gcc",
+    "binPath": ["bin"]
+  }
+]
+```
 
 ### Compilation Parameters (params)
 
@@ -366,9 +419,8 @@ This is just a suggestion, and we do not provide a specific guide.
 
 # TODO list
 
-- Add `.tar.gz` files via `wget` for third-party compilers (use `git` for toolchain now).
-- Added relative path support for third-party compilers (absolute paths are now used).
 - Use `MagiskBoot` to generate `boot.img`
+- Web page for configuring profiles
 
 # Acknowledgments
 
