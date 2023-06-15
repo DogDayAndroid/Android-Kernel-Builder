@@ -1,11 +1,11 @@
 [
   {
     "kernelSource": {
-      "name": "Redmi_Note_10_Proton",
-      "repo": "https://github.com/AOSP-13-Mediatek/kernel_xiaomi_chopin",
-      "branch": "r",
+      "name": "XiaoMi_MIX4_Proton",
+      "repo": "https://github.com/Inkypen79/kernel_xiaomi_odin",
+      "branch": "lineage-19.1",
       "device": "chopin",
-      "defconfig": "chopin_user_defconfig"
+      "defconfig": "odin"
     },
     "withKernelSU": false,
     "toolchains": [
