@@ -1,7 +1,7 @@
 [
   {
     "kernelSource": {
-      "name": "Redmi_Note_10_Proton",
+      "name": "Chopin_KernelSU_Proton",
       "repo": "https://github.com/AOSP-13-Mediatek/kernel_xiaomi_chopin",
       "branch": "r",
       "device": "chopin",
@@ -42,5 +42,5 @@
       "repo": "https://github.com/easterNday/AnyKernel3/",
       "branch": "thyme"
     }
-  }
+  }  
 ]
