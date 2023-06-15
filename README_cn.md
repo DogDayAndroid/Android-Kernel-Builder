@@ -269,8 +269,61 @@ Set-repos 作业从配置文件中读取内核源，并将其输出到 Build-Ker
 | -------------- | ------ | -------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `repo`         | 字符串 | 工具链仓库地址       | 工具链对应的 `git` 仓库地址                                                                                          |
 | `branch`       | 字符串 | 工具链所在分支       | 对应仓库的指定分支                                                                                                   |
+| `url`          | 字符串 | 工具链所在下载地址   | 对应编译工具链的地址                                                                                                 |
 | `name`         | 字符串 | 工具链名称           | 克隆到本地的文件夹名称，自定义                                                                                       |
 | `binPath`      | 数组   | 工具链二进制文件路径 | 编译时候会用到的 `bin` 文件所在的路径(相对于克隆后所在文件夹的路径)<br/>在编译的时候会转化为**绝对路径**进行参数设置 |
+
+因此你可以使用如下几形式来获取编译工具链:
+
+#### 1. 使用 `Git` 拉取编译工具链
+
+```json
+"toolchains": [
+  {
+    "repo": "https://github.com/kdrag0n/proton-clang",
+    "branch": "master",
+    "name": "proton-clang",
+    "binPath": ["./bin"]
+  }
+]
+```
+
+#### 2. 使用 `wget` 下载编译工具链
+
+这种方式可以获取到 `.zip` | `.tar` | `.tar.gz` | `.rar` 格式的编译工具链压缩包。
+
+```json
+"toolchains": [
+  {
+    "url": "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master-kernel-build-2022/clang-r450784d.tar.gz",
+    "name": "clang",
+    "binPath": ["./bin"]
+  },
+  {
+    "url": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.1.0_r27.tar.gz",
+    "name": "gcc",
+    "binPath": ["bin"]
+  }
+]
+```
+
+#### 3. 混合模式(同时使用 `Git` 和 `wget`)
+
+```json
+"toolchains": [,
+  {
+    "repo": "https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone/",
+    "branch": "11",
+    "name": "clang",
+    "binPath": ["bin"]
+  },
+  {
+    "url": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.1.0_r27.tar.gz",
+    "name": "gcc",
+    "binPath": ["bin"]
+  }
+]
+```
 
 ### 编译参数(params)
 
@@ -365,9 +418,8 @@ act --artifact-server-path /tmp/artifacts -v
 
 # TODO 列表
 
-- 为第三方编译器添加相对路径支持（现在使用绝对路径）。
-- 通过 `wget` 添加 `.tar.gz` 文件作为第三方编译器（现在使用 `git` 获取工具链）。
 - 使用 `MagiskBoot` 来生成 `boot.img`
+- 生成配置文件的网页
 
 # 致谢
 

@@ -58,7 +58,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential bc gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev libfl-dev
-          sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache
+          sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python2 python2-dev
           sudo apt-get install -y zip unzip tar gzip bzip2 rar unrar
 
       - name: "🚄 Create cache key from `repos`"
@@ -72,7 +72,9 @@ jobs:
         if: ${{ env.ccache == 'true' }}
         uses: actions/cache@v3
         with:
-          path: ~/.ccache
+          path: |
+            ~/.ccache
+            ${{ env.OUT_DIR }}
           key: ccache-${{ env.KERNEL_NAME }}-${{ steps.ccache_key.outputs.CACHE_KEY }}-${{ env.builddate }}
           restore-keys: |
             ccache-${{ env.KERNEL_NAME }}-${{ steps.ccache_key.outputs.CACHE_KEY }}-${{ env.builddate }}
@@ -158,17 +160,26 @@ jobs:
             args="$args ARCH=$ARCH"
           fi
           if [ -n "$CC" ]; then
+
+            if [[ "$CC" == *"/"* ]]; then
+              CC=${{ env.WORKSPACE }}/$CC
+            fi
+
             if [ ${{ env.ccache }} = true ]; then
-              args="$args CC=\"ccache ${{ env.WORKSPACE }}/$CC\""
-              # echo "CC=ccache ${{ env.WORKSPACE }}/$CC" >> $GITHUB_ENV
+              args="$args CC=\"ccache $CC\""
             else
-              args="$args CC=${{ env.WORKSPACE }}/$CC"
+              args="$args CC=$CC"
             fi
           fi
           while read -r externalCommand; do
-            args="$args $externalCommand"
-          done < <(jq -r '.externalCommand | to_entries[] | "\(.key)=${{ env.WORKSPACE }}/\(.value)"' <<< "$params")
-
+            key=$(echo "$externalCommand" | cut -d= -f1)
+            value=$(echo "$externalCommand" | cut -d= -f2)
+            if [[ "$value" == *"/"* ]]; then
+              value="${{ env.WORKSPACE }}/$value"
+            fi
+            args="$args $key=$value"
+          done < <(jq -r '.externalCommand | to_entries[] | "\(.key)=\(.value)"' <<< "$params")
+        
           echo "🤔 $args"
           echo "ARCH=$ARCH" >> $GITHUB_OUTPUT
           echo "args=$args" >> $GITHUB_OUTPUT
