@@ -374,7 +374,7 @@ make -j$(nproc --all) \
 
 1. 在 GitHub 上 `fork` 本项目
 
-2. 通过 Github 网页或者拉取到本地修改 `repos.json` 文件，并提交修改
+2. 通过 Github 网页或者拉取到本地修改 `repos/repos*.json` 文件，并提交修改
 
 3. 查看 Github 网页的 `Action` 页面，找到 `Build kernels` 并 `Run workflow`
 
