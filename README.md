@@ -375,7 +375,7 @@ This project's basic usage is as follows:
 
 1. Fork this project on GitHub.
 
-2. Modify the `repos.json` file through the Github website or pull it to your local machine and commit the changes.
+2. Modify the `repos/repos*.json` file through the Github website or pull it to your local machine and commit the changes.
 
 3. Go to the `Action` page on Github and find `Build kernels`, then `Run workflow`.
 
